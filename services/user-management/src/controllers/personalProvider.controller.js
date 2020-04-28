@@ -1,20 +1,14 @@
-const Users = require('../models/user.model');
-// const Services = require('../models/service.model');
-// const ServiceUsers = require('../models/serviceUser.model');
-
-
+const PersonalProviders = require('../models/personalProvider.model');
 const userAddedMessage = require('../message-bus/send/user.added');
 
-const userController = {
-
+const PersonalProviderController = {
 
   find: async (ctx) => {
-    ctx.body = await Users.find();
+    ctx.body = await PersonalProviders.find();
   },
-
   findById: async (ctx) => {
     try {
-      const result = await Users.findById(ctx.params.id);
+      const result = await PersonalProviders.findById(ctx.params.id);
       if (!result) {
         ctx.throw(404, 'User Not Found');
       }
@@ -30,17 +24,15 @@ const userController = {
 
   add: async (ctx) => {
     try {
-      const user = new Users();
-      user.firstName = ctx.request.body.firstName;
-      user.lastName = ctx.request.body.lastName;
-      user.description = ctx.request.body.description;
+      const user = new PersonalProviders();
+      user.firstname = ctx.request.body.firstname;
+      user.lastname = ctx.request.body.lastname;
       user.email = ctx.request.body.email;
       user.password = ctx.request.body.password;
 
-      user.save().then(() => {
-        userAddedMessage.send(ctx.request.body);
-      });
-      ctx.body = user;
+      const status = await user.save();
+      ctx.body = status;
+      userAddedMessage.send(ctx.request.body);
     } catch (err) {
       ctx.throw(422, err);
     }
@@ -48,7 +40,7 @@ const userController = {
 
   update: async (ctx) => {
     try {
-      const result = await Users.findByIdAndUpdate(
+      const result = await PersonalProviders.findByIdAndUpdate(
         ctx.params.id,
         ctx.request.body,
       );
@@ -67,7 +59,7 @@ const userController = {
 
   delete: async (ctx) => {
     try {
-      const result = await Users.findByIdAndRemove(ctx.params.id);
+      const result = await PersonalProviders.findByIdAndRemove(ctx.params.id);
       if (!result) {
         ctx.throw(404);
       }
@@ -80,6 +72,7 @@ const userController = {
       }
     }
   },
+
 };
 
-module.exports = userController;
+module.exports = PersonalProviderController;

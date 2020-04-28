@@ -18,7 +18,7 @@ module.exports = {
         connection.close();
       }, config.messageTimeout);
     } catch (err) {
-      logger.error(`Error Sending Article Added Event to ${exchangeName}: ${err}`);
+      logger.error(`Error Sending User Added Event to ${exchangeName}: ${err}`);
     }
   },
 };

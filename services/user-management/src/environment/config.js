@@ -5,12 +5,13 @@ const config = {
   messagebus: process.env.MESSAGE_BUS || 'amqp://rabbitmq',
   environment: process.env.ENVIRONMENT || 'dev',
   db: {
-    uri: process.env.DB_URI || 'mongodb://chalumuv-localnewsapplication.documents.azure.com:10255/?ssl=true&replicaSet=globaldb',
-    username: process.env.DB_USERNAME || 'chalumuv-localnewsapplication',
-    password: process.env.DB_PASSWORD || 'TlJ7hnd7iRck25fUFFWYgfJFdK2oSH1N2kbBQjFzb66nqFx486JP6eaCKAQrlyn3Cnwxn6MzJtF5ABeyN9CKYQ==',
+    uri:
+      process.env.DB_URI
+      || 'mongodb+srv://sankara:7TYQLMuxRoHsS5nX@cluster0-4avtj.mongodb.net/test?retryWrites=true&w=majority',
+    username: process.env.DB_USERNAME || 'mongoadmin',
+    password: process.env.DB_PASSWORD || 'mongoadmin',
   },
-  services: {
-  },
+  services: {},
   messageTimeout: 500,
   jwtsecret: 'yoursecretkey',
 };

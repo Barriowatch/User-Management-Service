@@ -1,6 +1,6 @@
 const KoaRouter = require('koa-router');
-const config = require('../environment/config');
 const usersController = require('../controllers/user.controller');
+const config = require('../environment/config');
 const jwt = require('../middlewares/jwt');
 
 const api = 'users';
@@ -13,7 +13,7 @@ router.prefix(`/${config.baseAPIRoute}/${api}`);
 router.get('/', usersController.find);
 
 // POST /api/users
-router.post('/', jwt, usersController.add);
+router.post('/', usersController.add);
 
 // GET /api/users/id
 router.get('/:id', usersController.findById);
@@ -23,5 +23,6 @@ router.put('/:id', jwt, usersController.update);
 
 // DELETE /api/users/id
 router.delete('/:id', jwt, usersController.delete);
+
 
 module.exports = router;
