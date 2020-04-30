@@ -24,4 +24,5 @@ router.put('/:id', jwt, providersController.update);
 // DELETE /api/providers/id
 router.delete('/:id', jwt, providersController.delete);
 
+
 module.exports = router;

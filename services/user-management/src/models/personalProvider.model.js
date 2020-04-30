@@ -51,11 +51,10 @@ PersonalProviderSchema.methods.toProfileJSONFor = function (_user) {
     firstname: this.firstname,
     lastname: this.lastname,
     email: this.email,
-    profile_picture: this.profile_picture,
   };
 };
 
 module.exports = mongoose.model(
-  'PersonalServicProvider',
+  'PersonalServiceProvider',
   PersonalProviderSchema,
 );

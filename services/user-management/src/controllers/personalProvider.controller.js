@@ -3,74 +3,76 @@ const userAddedMessage = require('../message-bus/send/user.added');
 
 const PersonalProviderController = {
 
-  find: async (ctx) => {
-    ctx.body = await PersonalProviders.find();
-  },
-  findById: async (ctx) => {
-    try {
-      const result = await PersonalProviders.findById(ctx.params.id);
-      if (!result) {
-        ctx.throw(404, 'User Not Found');
-      }
-      ctx.body = result;
-    } catch (err) {
-      if (err.name === 'CastError' || err.name === 'NotFoundError') {
-        ctx.throw(404);
-      } else {
-        ctx.throw(500);
-      }
-    }
+  findById: (req, res, next) => {
+    PersonalProviders.findById(req.payload.id).then((user) => {
+      if (!user) { return res.sendStatus(401); }
+
+      return res.json({ user: user.toProfileJSONFor() });
+    }).catch(next);
   },
 
-  add: async (ctx) => {
-    try {
-      const user = new PersonalProviders();
-      user.firstname = ctx.request.body.firstname;
-      user.lastname = ctx.request.body.lastname;
-      user.email = ctx.request.body.email;
-      user.password = ctx.request.body.password;
+  add: (req, res, next) => {
+    const user = new PersonalProviders();
+    user.firstname = req.body.user.firstname;
+    user.lastname = req.body.user.lastname;
+    user.email = req.body.user.email;
 
-      const status = await user.save();
-      ctx.body = status;
-      userAddedMessage.send(ctx.request.body);
-    } catch (err) {
-      ctx.throw(422, err);
-    }
+    user.save().then(() => {
+      userAddedMessage.send(req.body.user);
+      res.json({ user: user.toProfileJSONFor });
+    }).catch(next);
   },
 
-  update: async (ctx) => {
-    try {
-      const result = await PersonalProviders.findByIdAndUpdate(
-        ctx.params.id,
-        ctx.request.body,
-      );
-      if (!result) {
-        ctx.throw(404);
+  update: (req, res, next) => {
+    PersonalProviders.findById(req.payload.id).then((user) => {
+      if (!user) { return res.sendStatus(401); }
+
+      // only update fields that were actually passed...
+      if (typeof req.body.user.lastname !== 'undefined') {
+        PersonalProviders.lastname = req.body.user.lastname;
       }
-      ctx.body = result;
-    } catch (err) {
-      if (err.name === 'CastError' || err.name === 'NotFoundError') {
-        ctx.throw(404);
-      } else {
-        ctx.throw(500);
+      if (typeof req.body.user.firstname !== 'undefined') {
+        PersonalProviders.firstname = req.body.user.firstname;
       }
-    }
+      if (typeof req.body.user.email !== 'undefined') {
+        PersonalProviders.email = req.body.user.email;
+      }
+      if (typeof req.body.user.phone !== 'undefined') {
+        PersonalProviders.phone = req.body.user.phone;
+      }
+      if (typeof req.body.user.status !== 'undefined') {
+        PersonalProviders.status = req.body.user.status;
+      }
+      if (typeof req.body.user.profile_picture !== 'undefined') {
+        PersonalProviders.profile_picture = req.body.user.profile_picture;
+      }
+      if (typeof req.body.user.birth_date !== 'undefined') {
+        PersonalProviders.birth_date = req.body.user.birth_date;
+      }
+      if (typeof req.body.user.gender !== 'undefined') {
+        PersonalProviders.gender = req.body.user.gender;
+      }
+      if (typeof req.body.user.barrio_id !== 'undefined') {
+        PersonalProviders.barrio_id = req.body.user.barrio_id;
+      }
+      if (typeof req.body.user.location !== 'undefined') {
+        PersonalProviders.location = req.body.user.location;
+      }
+      if (typeof req.body.user.password !== 'undefined') {
+        PersonalProviders.setPassword(req.body.user.password);
+      }
+
+      return user.save().then(() => res.json({ user }));
+    }).catch(next);
   },
 
-  delete: async (ctx) => {
-    try {
-      const result = await PersonalProviders.findByIdAndRemove(ctx.params.id);
-      if (!result) {
-        ctx.throw(404);
-      }
-      ctx.body = result;
-    } catch (err) {
-      if (err.name === 'CastError' || err.name === 'NotFoundError') {
-        ctx.throw(404);
-      } else {
-        ctx.throw(500);
-      }
-    }
+  delete: (req, res, next) => {
+    PersonalProviders.findById(req.payload.id).then((user) => {
+      if (!user) { return res.sendStatus(401); }
+
+
+      return req.user.remove().then(() => res.sendStatus(204)).catch(next);
+    });
   },
 
 };

@@ -18,7 +18,6 @@ const userController = {
       if (!result) {
         ctx.throw(404, 'User Not Found');
       }
-      ctx.body = result;
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404);
