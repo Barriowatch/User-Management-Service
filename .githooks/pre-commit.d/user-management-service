@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cd ./services/user-management
-npm run lint
