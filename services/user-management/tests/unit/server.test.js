@@ -27,8 +27,6 @@ test('Server works', async () => {
 
   expect(mockConnectDB.mock.calls.length).toBe(1);
   expect(mockConnectDB.mock.calls[0][0]).toBe(config.db.uri);
-  expect(mockConnectDB.mock.calls[0][1].user).toBe(config.db.username);
-  expect(mockConnectDB.mock.calls[0][1].pass).toBe(config.db.password);
 
   expect(mockListen.mock.calls.length).toBe(1);
   expect(mockListen.mock.calls[0][0]).toBe(config.port);

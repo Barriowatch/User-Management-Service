@@ -10,7 +10,7 @@ const app = require('./app');
 
 // Init Database Connection
 Mongoose.connect(config.db.uri, {
-  dbName: 'Barrio-User-Management-Database',
+  dbName: config.db.dbname,
   useNewUrlParser: true,
 });
 Mongoose.connection.on('error', console.error);

@@ -2,20 +2,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 
-const Koa = require('koa');
-const userRouter = require('../../src/routes/user.routes');
+const express = require('express');
+const userRouter = require('../../src/routes/index');
 
-const mockUserRoutes = jest.fn(() => { return async (ctx, next) => {}; });
-userRouter.routes = mockUserRoutes;
+const mockUserRoutes = jest.fn(() => { return (req, res, next) => {}; });
+userRouter.stack = mockUserRoutes;
 
-describe('Koa App', () => {
-  test('Should return valid koa application', () => {
+describe('Express App', () => {
+  test('Should return valid express application', () => {
     const app = require('../../src/app');
-    expect(app).toBeInstanceOf(Koa);
-  });
-
-  test('Should have user routes', () => {
-    require('../../src/app');
-    expect(mockUserRoutes.mock.calls.length).toBe(1);
+    expect(typeof (app)).toEqual('function');
   });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable arrow-body-style */
 
 const personalProviderModel = {};
@@ -10,10 +11,12 @@ personalProviderModel.findById = jest.fn((id) => {
   return data.find(user => user.id === id);
 });
 
-personalProviderModel.create = jest.fn((user) => {
-  data.push(user);
-  return user;
-});
+personalProviderModel.create = jest.fn(() => Promise.resolve());
+// personalProviderModel.create = jest.fn((user) => {
+//   user.id = data.length;
+//   data.push(user);
+//   return user;
+// });
 
 personalProviderModel.findByIdAndUpdate = jest.fn((id, updateduser) => {
   const index = data.findIndex(user => user.id === id);

@@ -4,9 +4,10 @@ exports[`config should load default values 1`] = `
 Object {
   "baseAPIRoute": "api",
   "db": Object {
-    "password": "TlJ7hnd7iRck25fUFFWYgfJFdK2oSH1N2kbBQjFzb66nqFx486JP6eaCKAQrlyn3Cnwxn6MzJtF5ABeyN9CKYQ==",
-    "uri": "mongodb://chalumuv-localnewsapplication.documents.azure.com:10255/?ssl=true&replicaSet=globaldb",
-    "username": "chalumuv-localnewsapplication",
+    "dbname": "Barrio-User-Management-Database",
+    "password": "mongoadmin",
+    "uri": "mongodb+srv://sankara:7TYQLMuxRoHsS5nX@cluster0-4avtj.mongodb.net/test?retryWrites=true&w=majority",
+    "username": "mongoadmin",
   },
   "environment": "dev",
   "jwtsecret": "yoursecretkey",

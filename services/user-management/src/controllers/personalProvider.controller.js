@@ -12,14 +12,17 @@ const PersonalProviderController = {
   },
 
   add: (req, res, next) => {
-    const user = new PersonalProviders();
-    user.firstname = req.body.user.firstname;
-    user.lastname = req.body.user.lastname;
-    user.email = req.body.user.email;
+    const user = {
+      firstname: req.body.user.firstname,
+      lastname: req.body.user.lastname,
+      email: req.body.user.email,
+    };
+    const promise = PersonalProviders.create(user);
 
-    user.save().then(() => {
+    // eslint-disable-next-line no-shadow
+    promise.then((user) => {
       userAddedMessage.send(req.body.user);
-      res.json({ user: user.toProfileJSONFor });
+      res.json({ user: user.toProfileJSONFor() });
     }).catch(next);
   },
 

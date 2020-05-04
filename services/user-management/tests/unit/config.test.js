@@ -8,8 +8,7 @@ describe('config', () => {
     expect(config.environment).not.toBeNull();
     expect(config.messagebus).not.toBeNull();
     expect(config.db.uri).not.toBeNull();
-    expect(config.db.username).not.toBeNull();
-    expect(config.db.password).not.toBeNull();
+    expect(config.db.dbname).not.toBeNull();
     expect(config).toMatchSnapshot();
   });
 });

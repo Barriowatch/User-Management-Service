@@ -5,6 +5,7 @@ const config = {
   messagebus: process.env.MESSAGE_BUS || 'amqp://rabbitmq',
   environment: process.env.ENVIRONMENT || 'dev',
   db: {
+    dbname: process.env.DB_NAME || 'Barrio-User-Management-Database',
     uri:
       process.env.DB_URI
       || 'mongodb+srv://sankara:7TYQLMuxRoHsS5nX@cluster0-4avtj.mongodb.net/test?retryWrites=true&w=majority',
