@@ -1,7 +1,7 @@
 jest.mock('../../src/controllers/personalProvider.controller');
 
 const request = require('supertest');
-const providerController = require('../../src/controllers/personalProvider.controller');
+const providersController = require('../../src/controllers/personalProvider.controller');
 const app = require('../../src/app');
 
 const user = {
@@ -22,14 +22,27 @@ const user = {
 //   });
 // });
 
-describe('POST /api/users', () => {
+describe('POST /api/provider', () => {
   test('Should sucessfully get status 200', async (done) => {
     const response = await request(app)
       .post('/api/providers')
       .send({
         user,
       });
-    expect(providerController.add).toBeCalledTimes(1);
+    expect(providersController.add).toBeCalledTimes(1);
+    expect(response.status).toBe(200);
+    done();
+  });
+});
+
+describe('PUT /api/providers', () => {
+  test('Should sucessfully get status 200', async (done) => {
+    const response = await request(app)
+      .put('/api/providers')
+      .send({
+        user,
+      });
+    expect(providersController.update).toBeCalledTimes(1);
     expect(response.status).toBe(200);
     done();
   });

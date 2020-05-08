@@ -35,9 +35,10 @@ const ServiceUserSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Service',
     },
+    barrio_id: { type: String },
     birth_date: { type: Date },
     gender: { type: String },
-
+    profile_picture_url: { type: String },
     location: {
       type: { type: String },
       coordinates: [],
@@ -47,6 +48,14 @@ const ServiceUserSchema = new mongoose.Schema(
 );
 
 ServiceUserSchema.plugin(uniqueValidator, { message: 'is already taken' });
+
+// eslint-disable-next-line no-unused-vars
+ServiceUserSchema.methods.toProfileJSONFor = _user => ({
+  firstname: this.firstname,
+  lastname: this.lastname,
+  email: this.email,
+});
+
 module.exports = mongoose.model(
   'ServiceUser',
   ServiceUserSchema,

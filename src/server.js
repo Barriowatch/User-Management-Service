@@ -12,6 +12,8 @@ const app = require('./app');
 Mongoose.connect(config.db.uri, {
   dbName: config.db.dbname,
   useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 Mongoose.connection.on('error', console.error);
 

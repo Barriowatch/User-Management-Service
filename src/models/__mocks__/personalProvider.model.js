@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable arrow-body-style */
 
@@ -11,7 +12,10 @@ personalProviderModel.findById = jest.fn((id) => {
   return data.find(user => user.id === id);
 });
 
-personalProviderModel.create = jest.fn(() => Promise.resolve());
+personalProviderModel.create = jest.fn((user) => {
+  data.push(user);
+  return Promise.resolve();
+});
 // personalProviderModel.create = jest.fn((user) => {
 //   user.id = data.length;
 //   data.push(user);
@@ -23,7 +27,7 @@ personalProviderModel.findByIdAndUpdate = jest.fn((id, updateduser) => {
   if (index >= 0) {
     data[index] = updateduser;
   }
-  return updateduser;
+  return Promise.resolve();
 });
 
 personalProviderModel.findByIdAndRemove = jest.fn((id) => {
